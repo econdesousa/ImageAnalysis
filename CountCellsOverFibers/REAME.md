@@ -1,0 +1,1 @@
+Not working properly in dataset available due to the size of the images. The images had to be truncated to have less than 25Mb and therefore were too small causing the threshold to detect background as belonging to the fibers
