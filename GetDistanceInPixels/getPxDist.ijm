@@ -3,9 +3,9 @@
  * 
  *  
  * Eduardo Conde-Sousa
- * BioImaging @ i3S
- * B.Image @ INEB
- * 
+ * BioImaging @ i3S - Instituto de Investigacao e Inovacao em Saude
+ * B.Image @ INEB -  Instituto Nacional de Engenharia Biomedica 
+ *
  * econdesousa@ineb.up.pt
  * econdesousa@i3s.up.pt
  * econdesousa@gmail.com
