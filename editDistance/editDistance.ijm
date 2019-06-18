@@ -4,12 +4,8 @@
  * i3S - Instituto de Investigacao e Inovacao em Saude
  * 
  * authors:
- * Eduardo Conde-Sousa (1)			Paulo Aguiar
- * econdesousa@ineb.up.pt			pauloaguiar@ineb.up.pt
- * 
- * (1) corresponding author
- * 
- * 
+ * Eduardo Conde-Sousa 
+ * econdesousa@ineb.up.pt
  * 
  * 
  * 
