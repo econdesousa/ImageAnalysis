@@ -23,7 +23,7 @@ if( roiManager("count")>0){
 	roiManager("reset");
 }
  
-#@ Integer (label="Noise Tolerance: ",value=2000) NoiseTol
+#@ Integer (label="Noise Tolerance: ",value=1500) NoiseTol
 #@ File (label="Select The ROI Directory", style="directory",value="") roiDIR
 #@ File[]  (label="Select Working Files", style="file") listOfPaths
 #@ File (label="Select The Output Directory", style="directory",value="") outDir
