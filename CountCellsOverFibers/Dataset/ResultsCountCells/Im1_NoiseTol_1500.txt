@@ -1,0 +1,4 @@
+Slice	Count	Total Area	Average Size	%Area	Mean
+fibers	5	14274.5639	2854.9128	28.5832	255
+green	88	50.5051	0.5739	0.1011	0
+red	165	94.6970	0.5739	0.1896	0
