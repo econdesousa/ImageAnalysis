@@ -1,6 +1,6 @@
 Parameter	Value
 channel	1
-B&C saturation	0.000
+B&C saturation	0.950
 Number of Brightness & Contrast Iterations	4
 Flatfield radius	200
 Local Contrast Enhance Radius	10
