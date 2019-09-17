@@ -8,7 +8,7 @@
 
 **Usage:**
 
-* Fisrt run script FilamentSegmentation_v1.1.ijm
+* First run script FilamentSegmentation_v1.1.ijm
   * This will output a folder with B&C enhaced version of the original image (not to be used elsewhere - just for visualization) and a roi file for each image
 * The run CountCells_v3.ijm
   * input should be Noise Tolerance (tipically a value between 1000 and 2000, DEAFULT=1500).
