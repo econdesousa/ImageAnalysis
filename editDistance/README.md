@@ -10,4 +10,5 @@ adapted from:
 Very inefficient for large strings (sentences)
  	
 don't work for all possible cases
+
 ImageJ macro language don't distinguish lowercase from uppercase strings
