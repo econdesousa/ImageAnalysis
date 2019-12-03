@@ -9,6 +9,12 @@
  * 
  * (1) corresponding author
  * 
+ * 
+ * 
+ * v0.2
+ * -> fix mainName for "import sequence" stacks
+ * -> add roiManager options to the beginning of macro 
+ * 
  */
  
  /*
@@ -23,15 +29,26 @@
   * them to ROI manager by pressing OK buttom ROI will
   * be saved at the same folder of the image and with 
   * the same name (except for the extension)
+  * 
   */
-  
- macro "save Roi" {
+
+
+
+macro "save Roi" {
+	roiManager("Associate", "true");
+	roiManager("Centered", "false");
+	roiManager("UseNames", "true");
 	if (nImages<1){
 		newIm = File.openDialog("Choose a File"); 
 		open(newIm);
 	}
 	name=getTitle();
-	mainName=substring(name, 0, lastIndexOf(name,"."));	
+	ind=lastIndexOf(name,".");
+	if (ind>=0) {
+		mainName=substring(name, 0, ind);	
+	}else {
+		mainName = name;
+	}
 	path=getDirectory("image");
 	run("ROI Manager...");
 	flag=true;
