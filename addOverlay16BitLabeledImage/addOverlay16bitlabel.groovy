@@ -24,9 +24,25 @@
  * 			'labeled image' 
  * 					is an ilastik output of object classification workflow
  * 
- * if labeled image is to be open with IJ.openImage, please comment line #51 and uncomment lines #52 and 53
+ * If labeled image is to be open with IJ.openImage, please comment line #67 and uncomment lines #68 and 69
  * 
-  */
+ * 
+ * 
+ * 
+ * 
+ * If you use this macro please add in the acknowledgements 
+ * of your papers and/or thesis (MSc and PhD) the reference 
+ * to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122. 
+ * 
+ * As a suggestion you may use the following sentence:
+ * 
+ * The authors acknowledge the support of the i3S Scientific Platform 
+ * Bioimaging, member of the national infrastructure 
+ * PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
+ * 
+ * 
+ * code version: 0.1	
+ */
 
 
 import ij.IJ
