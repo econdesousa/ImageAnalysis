@@ -1,4 +1,4 @@
-BIOIMAGING - 19/1/2020 /
+BIOIMAGING - 19/1/2020 \
 INEB -  Instituto Nacional de Engenharia Biomedica /
 i3S - Instituto de Investigacao e Inovacao em Saude /
  /
