@@ -5,7 +5,7 @@ i3S - Instituto de Investigacao e Inovacao em Saude \
 author: \
 **Eduardo Conde-Sousa** \
 [econdesousa@ineb.up.pt](mailto:econdesousa@ineb.up.pt) \
-[econdesousa@gmail.com](mailto:econdesousa@gmail.com) \
+[econdesousa@gmail.com](mailto:econdesousa@gmail.com)
 
 -------------------------------------------------------------------------- 
 **Count Number of Nuclei using STARDIST**
