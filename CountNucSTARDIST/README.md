@@ -1,6 +1,6 @@
 BIOIMAGING - 19/1/2020 \
-INEB -  Instituto Nacional de Engenharia Biomedica \
-i3S - Instituto de Investigacao e Inovacao em Saude \
+INEB -  Instituto Nacional de Engenharia Biomédica \
+i3S - Instituto de Investigação e Inovação em Saúde \
  \
 author: \
 **Eduardo Conde-Sousa** \
