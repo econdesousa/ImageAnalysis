@@ -1,5 +1,5 @@
 /*
- * b.IMAGE - 19/1/2020
+ * Bioimaging - 19/1/2020
  * INEB -  Instituto Nacional de Engenharia Biomedica
  * i3S - Instituto de Investigacao e Inovacao em Saude
  * 
