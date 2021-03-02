@@ -22,11 +22,10 @@
  * 					can be any image that can be open with IJ.openImage();
  * 			
  * 			'labeled image' 
- * 					is an ilastik output of object classification workflow
- * 
- * If labeled image is to be open with IJ.openImage, please comment line #67 and uncomment lines #68 and 69
- * 
- * 
+ * 					an ilastik output of object classification workflow
+ * 					or
+ * 					an tif/jpeg/... label image
+ *  
  * 
  * 
  * 
@@ -64,9 +63,13 @@ import java.awt.image.IndexColorModel
 impRaw = IJ.openImage(file.getAbsolutePath());
 impRaw.show()	
 
-IJ.run("Import HDF5", "select=["+fileLab+"] datasetname=[/exported_data: (49, 512, 512, 1) uint32] axisorder=tyxc");
-//impLab = IJ.openImage(fileLab.getAbsolutePath());
-//impLab.show()
+
+if ( fileLab.toString().endsWith("h5") ){
+	IJ.run("Import HDF5", "select=["+fileLab+"] datasetname=[/exported_data: (49, 512, 512, 1) uint32] axisorder=tyxc");
+}else{
+	impLab = IJ.openImage(fileLab.getAbsolutePath());
+	impLab.show()
+}
 impLabel = IJ.getImage();
 
 
