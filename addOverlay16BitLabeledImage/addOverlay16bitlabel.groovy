@@ -40,7 +40,7 @@
  * PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
  * 
  * 
- * code version: 0.1	
+ * code version: 0.2	
  */
 
 
