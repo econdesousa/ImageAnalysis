@@ -9,7 +9,7 @@ Generates header for macro scripts
 Code base on https://twitter.com/DrNickCondon/status/1250310396642078720
 
 ### code version
-0.1
+0.1.1
 ### last modification
 15/03/2021 at 16:56:10 (GMT)
 
