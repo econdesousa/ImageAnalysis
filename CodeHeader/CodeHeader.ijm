@@ -3,14 +3,14 @@
 #  BIOIMAGING - INEB/i3S
 Eduardo Conde-Sousa (econdesousa@gmail.com)
 
-## Title
+## Code Header Generator
 
-Description
+Generates header for macro scripts<br>code base on https://twitter.com/DrNickCondon/status/1250310396642078720
 
 ### code version
 0.1
 ### last modification
-15/03/2021 at 16:34:42 (GMT)
+15/03/2021 at 16:56:10 (GMT)
 
 ### Attribution:
 If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
@@ -18,6 +18,8 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 */
+
+
 
 //code base on https://twitter.com/DrNickCondon/status/1250310396642078720
 
