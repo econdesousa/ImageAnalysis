@@ -5,7 +5,8 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 
 ## Code Header Generator
 
-Generates header for macro scripts<br>code base on https://twitter.com/DrNickCondon/status/1250310396642078720
+Generates header for macro scripts
+Code base on https://twitter.com/DrNickCondon/status/1250310396642078720
 
 ### code version
 0.1
@@ -22,8 +23,6 @@ As a suggestion you may use the following sentence:
 
 
 //code base on https://twitter.com/DrNickCondon/status/1250310396642078720
-
-
 
 
 
