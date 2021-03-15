@@ -6,7 +6,7 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 ## Code Header Generator
 
 Generates header for macro scripts
-Code base on https://twitter.com/DrNickCondon/status/1250310396642078720
+Code adapted from https://twitter.com/DrNickCondon/status/1250310396642078720
 
 ### code version
 0.1.1
