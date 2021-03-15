@@ -62,6 +62,9 @@ function generateCode(codeTitle,codeAuthor,codeVersion,codeDescription,titlebrea
 	getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
 	
 	if (dayOfMonth <10){dayOfMonth = "0" + dayOfMonth;}
+	if (hour <10){hour = "0" + hour;}
+	if (minute <10){minute = "0" + minute;}
+	if (second <10){second = "0" + second;}
 	month = month +1;
 	if (month <10){month = "0" + month;}
 	printDate = toString(dayOfMonth) + "/" + month + "/" + year + " at "+ hour +":"+ minute +":"+ second +" (GMT)";
