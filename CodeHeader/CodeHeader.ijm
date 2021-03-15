@@ -68,10 +68,10 @@ function generateCode(codeTitle,codeAuthor,codeVersion,codeDescription,titlebrea
 	msg1="INEB/i3S";
 	msg2="<html>"
 	+"<h1><font color=blue>"+codeInstitution+"</h1>"
-	+"<p1><b>"+codeAuthor+"</b><br>"
+	+"<p1><b>"+codeAuthor+"</b><br></p1>"
 	+"<a href=\"mailto:"+codeEmail+"\">"+codeEmail+"</a><br>"
-	+titlebreak+"<br><font color=red>"+codeTitle+"</font><br>"+titlebreak+"<br>"
-	+codeDescription+"<br>"
+	+"<p1>"+titlebreak+"<br><font color=red>"+codeTitle+"</font><br>"+titlebreak+"<br></p1>"
+	+"<p1>"+codeDescription+"<br>"
 	+"<br>code version: <b>"+codeVersion+"</b><br>"
 	+"last modification: "+ printDate +"</p1>"
 	+"<h3>Attribution:</h3>"
