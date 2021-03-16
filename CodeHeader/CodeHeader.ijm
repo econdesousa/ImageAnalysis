@@ -22,7 +22,7 @@ As a suggestion you may use the following sentence:
 
 
 
-//code base on https://twitter.com/DrNickCondon/status/1250310396642078720
+//code adapted from https://twitter.com/DrNickCondon/status/1250310396642078720
 
 
 
