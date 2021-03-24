@@ -9,9 +9,9 @@ Generates header for macro scripts
 Code adapted from https://twitter.com/DrNickCondon/status/1250310396642078720
 
 ### code version
-0.1.1
+0.2
 ### last modification
-15/03/2021 at 16:56:10 (GMT)
+24/03/2021 at 16:03:16 (GMT)
 
 ### Attribution:
 If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
@@ -89,7 +89,9 @@ function generateCode(codeTitle,codeAuthor,codeVersion,codeDescription,titlebrea
 	print("# ",codeInstitution);
 	print(codeAuthor,"("+codeEmail+")");
 	print("");
+	print("****************************************************");
 	print("## "+codeTitle);
+	print("****************************************************");
 	print("");
 	print(codeDescription);
 	print("");
