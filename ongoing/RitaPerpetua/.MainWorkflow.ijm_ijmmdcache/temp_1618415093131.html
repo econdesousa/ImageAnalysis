@@ -1,0 +1,366 @@
+<html><head>
+<style>
+@font-face{font-family:Helvetica, Arial;font-weight:400;}
+body{font-family:Helvetica, Arial;}
+pre{font-family:Courier New, monospace;color:#000000;padding:5px 5px;background:#eeeeee;border:1px solid #dddddd;overflow-x:auto;margin:0}
+code{font-family:Courier New, monospace;}
+p,ul,ol,table,pre,dl{margin:0 0 20px}
+h1,h2,h3,h4,h5,h6{font-family:Helvetica, Arial;color:#222;margin:0 0 20px}
+h1,h2,h3{line-height:1.1}
+h1{font-size:28px}
+h2{color:#393939}
+h3,h4,h5,h6{color:#494949}
+table{padding:5px 5px;}
+th, td{font-family:Helvetica, Arial;margin:10px 10px 10px 10px; border: 1px solid #dddddd; padding: 15px;}}
+</style>
+</head>
+<body>
+<h1>BIOIMAGING - INEB/i3S</h1>
+<p>Eduardo Conde-Sousa (econdesousa@gmail.com)</p>
+<h2>Cell density assessement</h2>
+<ul>
+<li>3D cell segmentation from DAPI channel using ilastik pixel classification workflow</li>
+<li>Cell type evaluated from other channels</li>
+<li>output
+<ul>
+<li>Cell density map (DAPI)</li>
+<li>Cell density map (other markers)</li>
+</ul>
+</li>
+</ul>
+<h3>code version</h3>
+<p>0.1</p>
+<h3>last modification</h3>
+<p>24/03/2021 at 16:03:16 (GMT)</p>
+<h3>Attribution:</h3>
+<p>If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
+As a suggestion you may use the following sentence:</p>
+<ul>
+<li>The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).</li>
+</ul>
+<pre><code class="language-java">
+</code></pre>
+<h1>setup</h1>
+<pre><code class="language-java">
+var inputfile=&quot;C:/Users/ecsso/Dropbox/PostDoc/INEB/colaboracoes/20210204_RitaSantos_Perpetua/data/Quantificações IFs_Rita Santos/CD45 (verde) canal 0 ou 1_ CD19 (vermelho) canal 1 ou 2_ Núcleos (cinzento) canal 2 ou 3/E18.5/tmp.lif&quot;
+//&quot;C:/Users/ecsso/Dropbox/PostDoc/INEB/colaboracoes/20210204_RitaSantos_Perpetua/data/tiffs/DAPI/series_2_tmp.tif&quot;
+var modelPath=&quot;C:/Users/ecsso/Dropbox/PostDoc/INEB/colaboracoes/20210204_RitaSantos_Perpetua/macro/ilastik/DAPI.ilp&quot;;
+var smallTh=0.5;
+var largeTh=0.9;
+var smoothScale = 1;
+var series = 1;
+var x1 = 12;var y1 = 662;var width1 = 888;var height1 = 362;
+var isReg2Crop=false;
+inputfile = replace(inputfile, &quot;series_2&quot;, &quot;series_&quot;+series);
+run(&quot;CLIJ2 Macro Extensions&quot;, &quot;cl_device=[]&quot;);
+Ext.CLIJ2_clear();
+close(&quot;*&quot;);
+resetNonImageWindows();
+run(&quot;Record...&quot;);
+
+</code></pre>
+<h1>load data original data</h1>
+<pre><code class="language-java">
+setBatchMode(true);
+run(&quot;Bio-Formats Importer&quot;, &quot;open=[&quot;+inputfile+&quot;] color_mode=Colorized rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT series_&quot;+series);
+origID=getImageID();
+run(&quot;Duplicate...&quot;, &quot;title=CD45 duplicate channels=2&quot;);
+setBatchMode(&quot;show&quot;);
+setMinAndMax(0, 5000);
+run(&quot;Green&quot;);
+selectImage(origID);
+run(&quot;Duplicate...&quot;, &quot;title=CD19 duplicate channels=3&quot;);
+setBatchMode(&quot;show&quot;);
+setMinAndMax(0, 5000);
+run(&quot;Red&quot;);
+selectImage(origID);
+run(&quot;Duplicate...&quot;, &quot;title=DAPI duplicate channels=4&quot;);
+selectImage(origID);close();
+selectWindow(&quot;DAPI&quot;);
+setBatchMode(false);
+
+if (isReg2Crop) cropRegion(x1, y1, width1, height1);
+dapiID=getImageID();
+
+</code></pre>
+<p><a href="image_1618414979548.png"><img src="image_1618414979548.png" width="250" alt="CD45"/></a>
+<a href="image_1618414981789.png"><img src="image_1618414981789.png" width="250" alt="CD19"/></a>
+<a href="image_1618414983352.png"><img src="image_1618414983352.png" width="250" alt="DAPI"/></a></p>
+<h1>Threshold intensity data</h1>
+<p>DAPI channel is kept as is while other channels are thresholded (after smoothing)</p>
+<pre><code class="language-java">selectWindow(&quot;CD45&quot;);
+run(&quot;Gaussian Blur 3D...&quot;, &quot;x=3 y=3 z=3&quot;);
+stackThresh(&quot;Otsu dark&quot;);
+selectWindow(&quot;CD19&quot;);
+run(&quot;Gaussian Blur 3D...&quot;, &quot;x=3 y=3 z=3&quot;);
+stackThresh(&quot;Otsu dark&quot;);
+
+
+</code></pre>
+<p><a href="image_1618414985391.png"><img src="image_1618414985391.png" width="250" alt="CD45"/></a>
+<a href="image_1618414985715.png"><img src="image_1618414985715.png" width="250" alt="CD19"/></a></p>
+<h1>Predictions (from Ilastik)</h1>
+<ol>
+<li>Create Prediction</li>
+<li>Get only channel of interest</li>
+<li>Filter</li>
+</ol>
+<pre><code class="language-java">run(&quot;Run Pixel Classification Prediction&quot;, &quot;projectfilename=&quot;+modelPath+&quot; inputimage=DAPI pixelclassificationtype=Probabilities&quot;);
+//inputfileH5=substring(inputfile, 0,lastIndexOf(inputfile, &quot;tif&quot;))+&quot;h5&quot;;
+//run(&quot;Import HDF5&quot;, &quot;select=&quot;+inputfileH5+&quot; datasetname=/exported_data axisorder=zyxc&quot;);
+if (isReg2Crop) cropRegion(x1, y1, width1, height1);
+
+predID=getImageID();
+selectImage(predID);run(&quot;Duplicate...&quot;, &quot;title=maskRestrict duplicate channels=1&quot;);
+maskRestrictID=getImageID();
+selectImage(predID);close();
+selectImage(dapiID);
+getVoxelSize(width, height, depth, unit);
+selectImage(maskRestrictID);
+setVoxelSize(width, height, depth, unit);
+run(&quot;Gaussian Blur 3D...&quot;, &quot;x=&quot;+smoothScale+&quot; y=&quot;+smoothScale+&quot; z=&quot;+smoothScale);
+
+</code></pre>
+<p><a href="image_1618415067786.png"><img src="image_1618415067786.png" width="250" alt="maskRestrict"/></a></p>
+<h1>Prediction masks</h1>
+<p>Method: hysteresis threshold with two thresholds</p>
+<ul>
+<li>smallTh to generate maskRough</li>
+<li>largeTh to generate maskRestrict</li>
+</ul>
+<pre><code class="language-java">selectImage(maskRestrictID);
+run(&quot;Duplicate...&quot;, &quot;title=maskRough duplicate&quot;);
+maskRoughID=getImageID();
+
+getMask(maskRoughID,smallTh, 1);
+getMask(maskRestrictID, largeTh, 1);
+
+
+</code></pre>
+<p><a href="image_1618415069520.png"><img src="image_1618415069520.png" width="250" alt="maskRestrict"/></a>
+<a href="image_1618415069906.png"><img src="image_1618415069906.png" width="250" alt="maskRough"/></a></p>
+<h1>Marker Controlled Watershed</h1>
+<ol>
+<li>get inverted version of main image</li>
+<li>Apply MorpholibJ's Marker-controlled Watershed</li>
+</ol>
+<pre><code class="language-java">selectImage(dapiID);run(&quot;Duplicate...&quot;, &quot;title=inverted duplicate channels=1&quot;);
+selectWindow(&quot;inverted&quot;);
+invertedID=getImageID();
+run(&quot;Invert&quot;, &quot;stack&quot;);
+selectImage(dapiID);
+
+label_map = &quot;labeledImage&quot;;
+run(&quot;Marker-controlled Watershed&quot;, &quot;input=inverted marker=maskRestrict mask=maskRough binary calculate use&quot;);
+rename(label_map);
+run(&quot;glasbey_on_dark&quot;);
+selectImage(maskRestrictID);close();
+selectImage(maskRoughID);close();
+selectImage(invertedID);close();
+
+
+
+</code></pre>
+<pre>
+> -> Compute marker labels
+> -> Running watershed...
+>   Extracting voxel values...
+>   Extraction took 1369 ms.
+>   Flooding from 1048299 voxels...
+>   Flooding took: 6694 ms
+> Watershed 3d took 9210 ms.
+</pre>
+<p><a href="image_1618415081815.png"><img src="image_1618415081815.png" width="250" alt="labeledImage"/></a></p>
+<h1>averageDistance</h1>
+<pre><code class="language-java">
+Ext.CLIJ2_push(label_map);
+
+
+//averageDistance(label_map,&quot;labels_distance_&quot;,1,&quot;Fire&quot;,false);
+averageDistance(label_map,&quot;labels_distance_&quot;,3,&quot;Fire&quot;,false);
+//averageDistance(label_map,&quot;labels_distance_&quot;,9,&quot;Fire&quot;,false);
+
+</code></pre>
+<p><a href="image_1618415084457.png"><img src="image_1618415084457.png" width="250" alt="labeledImage"/></a>
+<a href="image_1618415084979.png"><img src="image_1618415084979.png" width="250" alt="labels_distance_3"/></a></p>
+<h1>group cell by positivity at channel x</h1>
+<pre><code class="language-java">
+cd45 = &quot;CD45&quot;;
+Ext.CLIJ2_push(cd45);
+cd19 = &quot;CD19&quot;;
+Ext.CLIJ2_push(cd19);
+number_of_dilations = 6;
+threshold=0.1;
+
+
+cd45PosCells=&quot;cd45PosCells&quot;;
+cd19PosCells=&quot;cd19PosCells&quot;;
+
+getPosNuc(cd45,label_map,number_of_dilations,threshold,cd45PosCells);
+getPosNuc(cd19,label_map,number_of_dilations,threshold,cd19PosCells);
+
+
+
+</code></pre>
+<p><a href="image_1618415089791.png"><img src="image_1618415089791.png" width="250" alt="CD45"/></a>
+<a href="image_1618415090258.png"><img src="image_1618415090258.png" width="250" alt="CD19"/></a>
+<a href="image_1618415090427.png"><img src="image_1618415090427.png" width="250" alt="ExtendedSpotsAfter_6_dilations"/></a>
+<a href="image_1618415090861.png"><img src="image_1618415090861.png" width="250" alt="cd45PosCells"/></a>
+<a href="image_1618415091218.png"><img src="image_1618415091218.png" width="250" alt="ExtendedSpotsAfter_6_dilations"/></a>
+<a href="image_1618415091420.png"><img src="image_1618415091420.png" width="250" alt="cd19PosCells"/></a></p>
+<h1>clean up garbage</h1>
+<pre><code class="language-java">
+
+//drawResult(label_map, dataVector,&quot;dataVector&quot;);
+//drawResult(label_map, aboveThreshMask,&quot;aboveThreshMask&quot;);
+
+run(&quot;Tile&quot;);
+
+
+Ext.CLIJ2_clear();
+run(&quot;Synchronize Windows&quot;);
+
+
+
+
+</code></pre>
+<h1>Convinient methods</h1>
+<pre><code class="language-java">
+function resetNonImageWindows(){
+	list = getList(&quot;window.titles&quot;);
+	for (i = 0; i &lt; lengthOf(list); i++) {
+		selectWindow(list[i]);run(&quot;Close&quot;);
+	}
+}
+
+function show(input, text) {
+	selectWindow(input);
+	run(&quot;Duplicate...&quot;, &quot;title=max_projection duplicate channels=4&quot;);
+	run(&quot;Z Project...&quot;, &quot;projection=[Max Intensity]&quot;);
+	setColor(pow(2,bitDepth())-1);
+	drawString(text, 20, 20);
+}
+function showCLIJ(input, text) {
+	Ext.CLIJ2_maximumZProjection(input, max_projection);
+	Ext.CLIJ2_pull(max_projection);
+	setColor(pow(2,bitDepth())-1);
+	drawString(text, 20, 20);
+	Ext.CLIJ2_release(max_projection);
+}
+
+function cropRegion(x, y, w, h){
+	makeRectangle(x, y, w, h);
+	run(&quot;Crop&quot;);
+}
+
+
+function getMask(id, th1,th2) { 
+	selectImage(id);
+	setThreshold(th1, th2);
+	run(&quot;Convert to Mask&quot;, &quot;stack&quot;);
+	if (is(&quot;Inverting LUT&quot;)) {
+		run(&quot;Invert LUT&quot;);
+	}
+	run(&quot;Fill Holes&quot;, &quot;stack&quot;);
+}
+
+
+function averageDistance(inputImage,outputName,nNeig,LUT,CalibrationBar){
+	outputImage=outputName+nNeig;
+	Ext.CLIJx_averageDistanceOfNClosestNeighborsMap(label_map, outputImage, nNeig);
+	Ext.CLIJ2_pull(outputImage);
+	Ext.CLIJ2_release(outputImage);
+	run(LUT);
+	if (CalibrationBar){
+		run(&quot;Calibration Bar...&quot;, &quot;location=[Upper Right] fill=White label=Black number=5 decimal=0 font=12 zoom=1 overlay&quot;);
+	}
+}
+
+function stackThresh(method) { 
+	setAutoThreshold(method+&quot; stack&quot;);
+	setOption(&quot;BlackBackground&quot;, true);
+	run(&quot;Convert to Mask&quot;, &quot;method=Otsu background=Dark black&quot;);
+}
+
+
+function labelDilation(imageIN,nDilations,is2pull,keepOnGPU) { 
+	Ext.CLIJ2_copy(imageIN, flip);
+	for (i = 0; i &lt; floor(nDilations/2); i++) {
+		Ext.CLIJ2_onlyzeroOverwriteMaximumDiamond(flip, flop);
+		Ext.CLIJ2_onlyzeroOverwriteMaximumDiamond(flop, flip);
+	}
+	if (floor(nDilations/2)*2&lt;nDilations){
+		Ext.CLIJ2_onlyzeroOverwriteMaximumDiamond(flip, flop);
+		Ext.CLIJ2_copy(flop, flip);
+	}
+	if (is2pull){
+		Ext.CLIJ2_pull(flip);
+		nameExtended=&quot;ExtendedSpotsAfter_&quot; + (i * 2) + &quot;_dilations&quot;;
+		rename(nameExtended);
+		run(&quot;glasbey_on_dark&quot;);
+	}
+	Ext.CLIJ2_release(flop);
+	if (keepOnGPU){
+		return flip;
+	}else {
+		Ext.CLIJ2_release(flip);
+		return 0;
+	}
+}
+
+
+
+function drawResult(label_map, measurement,outName) {
+	// replace label in the label map with corresponding measurements
+	Ext.CLIJ2_replaceIntensities(label_map, measurement, outName);
+	// show the parametric image
+	Ext.CLIJ2_pull(outName);
+	run(&quot;Fire&quot;);
+}
+
+
+
+// This function takes a vector, binarizes it by thresholding 
+// and visualizes the results as regions of interests:
+function above_bellow_threshold_vector(vector, labelmap, threshold) {
+
+	// threshold the vector in two vectors:
+	Ext.CLIJ2_smallerConstant(vector, bellowThresh, threshold);
+	Ext.CLIJ2_greaterOrEqualConstant(vector, aboveThresh, threshold);
+
+	bellowThresh_map=&quot;bellowThresh&quot;;
+	aboveThresh_map=&quot;aboveThresh&quot;;
+	// visualise resulting binary images
+	Ext.CLIJ2_replaceIntensities(labelmap, bellowThresh, bellowThresh_map);
+	Ext.CLIJ2_replaceIntensities(labelmap, aboveThresh, aboveThresh_map);
+
+	Ext.CLIJ2_pull(bellowThresh_map);
+	Ext.CLIJ2_pull(aboveThresh_map);
+
+}
+
+
+
+function getPosNuc(markerImage,label_map,number_of_dilations,threshold,aboveThreshMask) {
+
+	dataVector=&quot;MEAN_INTENSITY&quot;;
+	
+	
+	dilatedMask = labelDilation(markerImage,number_of_dilations,true,true);
+	Ext.CLIJ2_statisticsOfBackgroundAndLabelledPixels(dilatedMask, label_map);
+	setResult(dataVector, 0, 0);//remove signal outside cells
+	
+	Ext.CLIJ2_pushResultsTableColumn(dataVector, dataVector);
+	selectWindow(&quot;Results&quot;);run(&quot;Close&quot;);
+
+	Ext.CLIJ2_replaceIntensities(label_map, dataVector, aboveThreshMask);
+	Ext.CLIJ2_pull(aboveThreshMask);aboveThreshMask=&quot;aboveThreshMask&quot;;
+	setThreshold(threshold, pow(2,bitDepth())-1 );
+	setOption(&quot;BlackBackground&quot;, true);
+	run(&quot;Convert to Mask&quot;, &quot;method=Default background=Dark black&quot;);
+}
+</code></pre>
+
+
+
+</body></html>
