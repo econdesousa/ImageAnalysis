@@ -2,7 +2,7 @@
 
 Here are deposited ongoing workflows. 
 
-They may contain errors or uncompleted workflows.
+They may contain errors, uncompleted workflows, or simply workflows without proper annotations/comments.
 
 # Attribution:
 If you use any of the deposited macros (whole or part of) please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
