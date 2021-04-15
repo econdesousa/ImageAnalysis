@@ -43,10 +43,10 @@ Ext.CLIJ2_release(blobs);
 Ext.CLIJ2_release(imOut);
 
 ```
-<a href="data/image_1618486985688.png"><img src="image_1618486985688.png" width="250" alt="blobs.gif"/></a>
-<a href="data/image_1618486985779.png"><img src="image_1618486985779.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a>
+<a href="image_1618487236206.png"><img src="image_1618487236206.png" width="250" alt="blobs.gif"/></a>
+<a href="image_1618487236290.png"><img src="image_1618487236290.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a>
 
-# get image info
+# get image info and
 
 ```java
 label_map = getTitle();
@@ -55,7 +55,7 @@ Ext.CLIJ2_clear();
 Ext.CLIJ2_push(label_map);
 
 ```
-<a href="data/image_1618486985838.png"><img src="image_1618486985838.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a>
+<a href="image_1618487236345.png"><img src="image_1618487236345.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a>
 
 # get distance map
 
@@ -76,7 +76,7 @@ function averageDistance(inputImage,outputName,nNeig,LUT,CalibrationBar){
 	}
 }
 ```
-<a href="data/image_1618486985995.png"><img src="image_1618486985995.png" width="250" alt="voronoi_otsu_labeling-blobs_averageDist_3"/></a>
+<a href="image_1618487236503.png"><img src="image_1618487236503.png" width="250" alt="voronoi_otsu_labeling-blobs_averageDist_3"/></a>
 
 
 
