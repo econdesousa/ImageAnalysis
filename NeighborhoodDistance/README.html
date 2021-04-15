@@ -1,0 +1,83 @@
+<html><head>
+<style>
+@font-face{font-family:Helvetica, Arial;font-weight:400;}
+body{font-family:Helvetica, Arial;}
+pre{font-family:Courier New, monospace;color:#000000;padding:5px 5px;background:#eeeeee;border:1px solid #dddddd;overflow-x:auto;margin:0}
+code{font-family:Courier New, monospace;}
+p,ul,ol,table,pre,dl{margin:0 0 20px}
+h1,h2,h3,h4,h5,h6{font-family:Helvetica, Arial;color:#222;margin:0 0 20px}
+h1,h2,h3{line-height:1.1}
+h1{font-size:28px}
+h2{color:#393939}
+h3,h4,h5,h6{color:#494949}
+table{padding:5px 5px;}
+th, td{font-family:Helvetica, Arial;margin:10px 10px 10px 10px; border: 1px solid #dddddd; padding: 15px;}}
+</style>
+</head>
+<body>
+<h1>BIOIMAGING - INEB/i3S</h1>
+<p>Eduardo Conde-Sousa (econdesousa@gmail.com)</p>
+<h2>Neighborhood distance from labelmap</h2>
+<h3>code version</h3>
+<p>0.1</p>
+<h3>last modification</h3>
+<p>15/04/2021 at 12:28:16 (GMT)</p>
+<h3>Attribution:</h3>
+<p>If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
+As a suggestion you may use the following sentence:</p>
+<ul>
+<li>The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).</li>
+</ul>
+<pre><code class="language-java">
+
+
+run(&quot;CLIJ2 Macro Extensions&quot;, &quot;cl_device=[]&quot;);
+close(&quot;*&quot;);
+
+</code></pre>
+<h1>get a sample image and create label version</h1>
+<p>this part is just for demo</p>
+<pre><code class="language-java">run(&quot;Blobs (25K)&quot;);
+blobs = &quot;blobs.gif&quot;;
+Ext.CLIJ2_push(blobs);
+imOut = &quot;voronoi_otsu_labeling-blobs&quot;;
+spot_sigma = 5.0;
+outline_sigma = 5.0;
+Ext.CLIJx_voronoiOtsuLabeling(blobs, imOut, spot_sigma, outline_sigma);
+Ext.CLIJ2_pull(imOut);
+Ext.CLIJ2_release(blobs);
+Ext.CLIJ2_release(imOut);
+
+</code></pre>
+<p><a href="image_1618487341546.png"><img src="image_1618487341546.png" width="250" alt="blobs.gif"/></a>
+<a href="image_1618487341628.png"><img src="image_1618487341628.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a></p>
+<h1>get image info</h1>
+<pre><code class="language-java">label_map = getTitle();
+run(&quot;glasbey_on_dark&quot;);
+Ext.CLIJ2_clear();
+Ext.CLIJ2_push(label_map);
+
+</code></pre>
+<p><a href="image_1618487341693.png"><img src="image_1618487341693.png" width="250" alt="voronoi_otsu_labeling-blobs"/></a></p>
+<h1>get distance map</h1>
+<pre><code class="language-java">averageDistance(label_map,label_map+&quot;_averageDist_&quot;,3,&quot;Fire&quot;,true);
+
+
+function averageDistance(inputImage,outputName,nNeig,LUT,CalibrationBar){
+	outputImage=outputName+nNeig;
+	Ext.CLIJ2_closeIndexGapsInLabelMap(inputImage, inputImage_tmp);
+	Ext.CLIJx_averageDistanceOfNClosestNeighborsMap(inputImage_tmp, outputImage, nNeig);
+	Ext.CLIJ2_pull(outputImage);
+	Ext.CLIJ2_release(outputImage);
+	Ext.CLIJ2_release(inputImage_tmp);
+	run(LUT);
+	if (CalibrationBar){
+		run(&quot;Calibration Bar...&quot;, &quot;location=[Upper Right] fill=White label=Black number=5 decimal=0 font=12 zoom=1 overlay&quot;);
+	}
+}
+</code></pre>
+<p><a href="image_1618487341884.png"><img src="image_1618487341884.png" width="250" alt="voronoi_otsu_labeling-blobs_averageDist_3"/></a></p>
+
+
+
+</body></html>

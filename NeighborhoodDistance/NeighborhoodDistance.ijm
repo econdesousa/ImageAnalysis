@@ -39,7 +39,7 @@ Ext.CLIJ2_release(blobs);
 Ext.CLIJ2_release(imOut);
 
 /*
-# get image info and
+# get image info
 */
 label_map = getTitle();
 run("glasbey_on_dark");
