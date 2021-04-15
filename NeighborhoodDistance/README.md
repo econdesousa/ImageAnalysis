@@ -4,9 +4,7 @@
 #  BIOIMAGING - INEB/i3S
 Eduardo Conde-Sousa (econdesousa@gmail.com)
 
-## Cell density assessement
-
-* Neighborhood distance from labelmap
+## Neighborhood distance from labelmap
  
 ### code version
 0.1
