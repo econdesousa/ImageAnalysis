@@ -24,27 +24,9 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
-```java
-
-```
-
 # setup
 
 ```java
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 run("Bio-Formats Macro Extensions");
 Ext.setId(inputfile);
@@ -116,9 +98,6 @@ stackThresh("Otsu dark");
 
 ```java
 run("Run Pixel Classification Prediction", "projectfilename="+modelPath+" inputimage=DAPI pixelclassificationtype=Probabilities");
-//inputfileH5=substring(inputfile, 0,lastIndexOf(inputfile, "tif"))+"h5";
-//run("Import HDF5", "select="+inputfileH5+" datasetname=/exported_data axisorder=zyxc");
-
 	
 predID=getImageID();
 selectImage(predID);run("Duplicate...", "title=maskRestrict duplicate channels=1");
@@ -146,8 +125,6 @@ maskRoughID=getImageID();
 
 getMask(maskRoughID,smallTh, 1);
 getMask(maskRestrictID, largeTh, 1);
-	
-	
 ```
 <a href="image_1618765354512.png"><img src="image_1618765354512.png" width="250" alt="maskRestrict"/></a>
 <a href="image_1618765355068.png"><img src="image_1618765355068.png" width="250" alt="maskRough"/></a>
@@ -170,9 +147,6 @@ run("glasbey_on_dark");
 selectImage(maskRestrictID);close();
 selectImage(maskRoughID);close();
 selectImage(invertedID);close();
-
-	
-	
 ```
 <pre>
 > -> Compute marker labels
@@ -188,9 +162,7 @@ selectImage(invertedID);close();
 # averageDistance
 
 ```java
-	
 Ext.CLIJ2_push(label_map);
-	
 averageDistance(label_map,"labels_distance_",nNeig,"Fire",true);
 
 ```
@@ -200,7 +172,6 @@ averageDistance(label_map,"labels_distance_",nNeig,"Fire",true);
 # group cell by positivity at channel x
 
 ```java
-	
 cd45 = "CD45";
 Ext.CLIJ2_push(cd45);
 cd19 = "CD19";
@@ -227,9 +198,6 @@ Ext.CLIJ2_pull(PosCells);
 # averageDistance between groups
 
 ```java
-	
-	
-	
 cd45PosCellsLabels=cd45PosCells+"Labels";
 cd19PosCellsLabels=cd19PosCells+"Labels";
 PosCellsLabels=PosCells+"Labels";
@@ -252,8 +220,6 @@ selectWindow(PosCells);close();Ext.CLIJ2_release(PosCells);
 averageDistance(cd45PosCellsLabels,"cd45PosCellsLabels_",nNeig,"Fire",true);
 averageDistance(cd19PosCellsLabels,"cd19PosCellsLabels_",nNeig,"Fire",true);
 averageDistance(PosCellsLabels,"PosCellsLabels_",nNeig,"Fire",true);
-	
-	
 ```
 <a href="image_1618765393853.png"><img src="image_1618765393853.png" width="250" alt="cd45PosCellsLabels_9"/></a>
 <a href="image_1618765394289.png"><img src="image_1618765394289.png" width="250" alt="cd19PosCellsLabels_9"/></a>
@@ -262,21 +228,13 @@ averageDistance(PosCellsLabels,"PosCellsLabels_",nNeig,"Fire",true);
 # clean up garbage
 
 ```java
-	
-	
 //drawResult(label_map, dataVector,"dataVector");
 //drawResult(label_map, aboveThreshMask,"aboveThreshMask");
 	
-
 run("Tile");
-	
 	
 Ext.CLIJ2_clear();
 run("Synchronize Windows");
-
-
-
-
 ```
 
 # Convinient methods
@@ -419,6 +377,3 @@ function getPosNuc(markerImage,label_map,number_of_dilations,threshold,aboveThre
 ```
 
 
-
-```
-```
