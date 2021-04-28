@@ -47,7 +47,7 @@ showZoom("Demo_centroids",5);
 
 <a href="image_1619628907149.png"><img src="image_1619628907149.png" width="250" alt="MAX_Demo_centroids"/></a>
 
-Auxiliary Functions
+# Auxiliary Functions
 
 ```java
 function getCentroids(){
