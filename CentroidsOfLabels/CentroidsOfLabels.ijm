@@ -41,7 +41,7 @@ selectWindow("MAX_Demo");close();
 showZoom("Demo_centroids",5);
 
 /*
-Auxiliary Functions
+# Auxiliary Functions
 */
 function getCentroids(){
 	run("CLIJ2 Macro Extensions", "cl_device=[]");
