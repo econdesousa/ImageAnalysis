@@ -5,7 +5,7 @@
 Eduardo Conde-Sousa (econdesousa@gmail.com)
 
 ****************************************************
-## Get Centroids of Labeld Image
+## Get Centroids of Labeled Image
 ****************************************************
 
 Departing from a Demo Labeled Image retunrs the 
