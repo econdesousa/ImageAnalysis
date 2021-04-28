@@ -46,8 +46,6 @@ Auxiliary Functions
 function getCentroids(){
 	run("CLIJ2 Macro Extensions", "cl_device=[]");
 	labels=getTitle();
-	print("\\Clear");
-	print(labels);
 	centroidsPointList="centroidsPointList";
 	centroids="centroids";
 	output = labels+"_centroids";
@@ -56,8 +54,6 @@ function getCentroids(){
 	Ext.CLIJ2_centroidsOfLabels(labels, centroidsPointList);
 	
 	Ext.CLIJ2_getDimensions(centroidsPointList, number_of_labels, dimensionality, garbage);
-	print("number_of_labels", number_of_labels);
-	print("dimensionality", dimensionality);
 	
 	Ext.CLIJ2_create2D(coordinates_and_index, number_of_labels + 1, dimensionality + 1, 32);
 	Ext.CLIJ2_setRampX(coordinates_and_index);
