@@ -32,7 +32,7 @@ As a suggestion you may use the following sentence:
 getDemoImage("Demo");
 showZoom("Demo",5);
 /*
-# Get Centorids
+# Get Centroids
  */
 selectWindow("Demo");
 getCentroids();
