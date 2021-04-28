@@ -32,7 +32,6 @@ As a suggestion you may use the following sentence:
 getDemoImage("Demo");
 showZoom("Demo",5);
 ```
-<a href="image_1619628905910.png"><img src="image_1619628905910.png" width="250" alt="Demo"/></a>
 <a href="image_1619628905968.png"><img src="image_1619628905968.png" width="250" alt="MAX_Demo"/></a>
 
 # Get Centroids
@@ -45,12 +44,7 @@ selectWindow("MAX_Demo");close();
 showZoom("Demo_centroids",5);
 
 ```
-<pre>
-> Demo
-> number_of_labels 2
-> dimensionality 3
-</pre>
-<a href="image_1619628907114.png"><img src="image_1619628907114.png" width="250" alt="Demo_centroids"/></a>
+
 <a href="image_1619628907149.png"><img src="image_1619628907149.png" width="250" alt="MAX_Demo_centroids"/></a>
 
 Auxiliary Functions
@@ -59,8 +53,6 @@ Auxiliary Functions
 function getCentroids(){
 	run("CLIJ2 Macro Extensions", "cl_device=[]");
 	labels=getTitle();
-	print("\\Clear");
-	print(labels);
 	centroidsPointList="centroidsPointList";
 	centroids="centroids";
 	output = labels+"_centroids";
@@ -69,8 +61,6 @@ function getCentroids(){
 	Ext.CLIJ2_centroidsOfLabels(labels, centroidsPointList);
 	
 	Ext.CLIJ2_getDimensions(centroidsPointList, number_of_labels, dimensionality, garbage);
-	print("number_of_labels", number_of_labels);
-	print("dimensionality", dimensionality);
 	
 	Ext.CLIJ2_create2D(coordinates_and_index, number_of_labels + 1, dimensionality + 1, 32);
 	Ext.CLIJ2_setRampX(coordinates_and_index);
