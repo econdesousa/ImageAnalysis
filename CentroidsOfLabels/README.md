@@ -25,10 +25,6 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
-```java
-
-
-```
 
 # Get a Demo Labeled Image
 
@@ -39,7 +35,7 @@ showZoom("Demo",5);
 <a href="image_1619628905910.png"><img src="image_1619628905910.png" width="250" alt="Demo"/></a>
 <a href="image_1619628905968.png"><img src="image_1619628905968.png" width="250" alt="MAX_Demo"/></a>
 
-# Get Centorids
+# Get Centroids
 
 ```java
 selectWindow("Demo");
