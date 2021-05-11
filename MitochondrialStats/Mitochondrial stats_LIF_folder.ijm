@@ -64,13 +64,13 @@ for (i = 0; i < lengthOf(fileList); i++) {
 		Ext.getCurrentFile(file);
 		Ext.getSeriesCount(seriesCount);
 		for (s=1; s<=seriesCount; s++) {
-			proc1Image(path,fileList[i],s,outdir,1,sigma1x,sigma2x,projectName,2,scaleFactor);
+			main = proc1Image(path,fileList[i],s,outdir,1,sigma1x,sigma2x,projectName,2,scaleFactor);
 			selectWindow("Puncta");
-			saveAs("Results", outdir+fileList[i]+"_Puncta.txt");
+			saveAs("Results", outdir+main+"_Puncta.txt");
 			selectWindow("Rods");
-			saveAs("Results", outdir+fileList[i]+"_Rods.txt");
+			saveAs("Results", outdir+main+"_Rods.txt");
 			selectWindow("Networks");
-			saveAs("Results", outdir+fileList[i]+"Networks.txt");
+			saveAs("Results", outdir+main+"_Networks.txt");
 			close("*");
 			resetNonImageWindows();
 		}
@@ -111,6 +111,7 @@ function proc1Image(path,filename,s,outdir,chMito,sigma1x,sigma2x,projectName,ch
 	
 	run("Tile");
 	run("Show All");
+	return main;
 }
 /*
 # auxiliary functions
