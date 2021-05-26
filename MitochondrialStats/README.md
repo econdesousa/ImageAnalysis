@@ -1463,7 +1463,7 @@ function procDAPI(main,channel,scaleFactor){
 	getVoxelSize(width, height, depth, unit);
 	mainID=getImageID();
 
-	run("Duplicate...", "title=DAPI duplicate channels=2");
+	run("Duplicate...", "title=DAPI duplicate channels="+channel);
 	dapiID=getImageID();
 	run("Gaussian Blur...", "sigma=5");
 	run("Scale...", "x="+(1/scaleFactor)+" y="+(1/scaleFactor)+" interpolation=None average create");
