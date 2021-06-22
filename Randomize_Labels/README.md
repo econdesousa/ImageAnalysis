@@ -6,6 +6,9 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 
 ## Randomize Labels
 
+If one labeled image has **too many labels**, "glasbey on dark" will not properly (visually) separate neighbours.
+This macro randomizes labels so two neighbours have little chance of having close values.
+
 * input
 	* labeled image
 * output
