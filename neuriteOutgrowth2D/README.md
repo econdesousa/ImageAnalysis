@@ -22,26 +22,6 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
-```java
-
-```
-
-# setup
-
-```java
-
-
-
-
-
-
-
-
-
-
-
-```
-
 # Setup
 
 ```java
