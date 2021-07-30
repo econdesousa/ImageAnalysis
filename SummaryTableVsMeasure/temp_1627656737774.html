@@ -1,0 +1,114 @@
+<html><head>
+<style>
+@font-face{font-family:Helvetica, Arial;font-weight:400;}
+body{font-family:Helvetica, Arial;}
+pre{font-family:Courier New, monospace;color:#000000;padding:5px 5px;background:#eeeeee;border:1px solid #dddddd;overflow-x:auto;margin:0}
+code{font-family:Courier New, monospace;}
+p,ul,ol,table,pre,dl{margin:0 0 20px}
+h1,h2,h3,h4,h5,h6{font-family:Helvetica, Arial;color:#222;margin:0 0 20px}
+h1,h2,h3{line-height:1.1}
+h1{font-size:28px}
+h2{color:#393939}
+h3,h4,h5,h6{color:#494949}
+table{padding:5px 5px;}
+th, td{font-family:Helvetica, Arial;margin:10px 10px 10px 10px; border: 1px solid #dddddd; padding: 15px;}}
+</style>
+</head>
+<body>
+<h1>BIOIMAGING - INEB/i3S</h1>
+<p>Eduardo Conde-Sousa (econdesousa@gmail.com)</p>
+<h2>Summary Table Vs Measure command</h2>
+<p>(considreing or not the size of the particles)</p>
+<h3>code version</h3>
+<p>1</p>
+<h3>last modification</h3>
+<p>30/07/2021</p>
+<h3>Attribution:</h3>
+<p>If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
+As a suggestion you may use the following sentence:</p>
+<ul>
+<li>The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).</li>
+</ul>
+<pre><code class="language-java">
+
+close(&quot;*&quot;);
+roiManager(&quot;reset&quot;);
+
+
+</code></pre>
+<h1>Create a mask</h1>
+<ul>
+<li>Create one image with two blobs</li>
+<li>the first has area 2500 and the second has area 5000 (twice the first)</li>
+</ul>
+<pre><code class="language-java">newImage(&quot;Untitled&quot;, &quot;8-bit black&quot;, 300, 300, 1);
+makeRectangle(100, 100, 50, 50);
+run(&quot;Set...&quot;,&quot;value=255&quot;)
+roiManager(&quot;add&quot;);
+roiManager(&quot;select&quot;, 0);
+roiManager(&quot;rename&quot;, &quot;SquareArea5000&quot;);
+makeRectangle(10, 10, 50, 100);
+run(&quot;Set...&quot;,&quot;value=255&quot;)
+roiManager(&quot;add&quot;);
+roiManager(&quot;select&quot;, 1);
+roiManager(&quot;rename&quot;, &quot;RectangleArea2500&quot;);
+run(&quot;Set...&quot;,&quot;value=255&quot;)
+run(&quot;Select None&quot;);
+
+
+</code></pre>
+<p><a href="image_1627656736011.png"><img src="image_1627656736011.png" width="250" alt="Untitled"/></a></p>
+<h1>Create a demo &quot;Intensity image&quot; from the mask (called &quot;label&quot;)</h1>
+<ul>
+<li>Create a new image where the all pixels in first blob have intensity 1</li>
+<li>all pixels in the second blob have intensity 2</li>
+</ul>
+<pre><code class="language-java">
+run(&quot;Set Measurements...&quot;, &quot;area mean integrated display redirect=None decimal=9&quot;);
+run(&quot;Analyze Particles...&quot;, &quot;  show=[Count Masks]&quot;);
+rename(&quot;label&quot;);
+setMinAndMax(0, 2);
+run(&quot;glasbey_on_dark&quot;);
+
+
+</code></pre>
+<p><a href="image_1627656736206.png"><img src="image_1627656736206.png" width="250" alt="Untitled"/></a>
+<a href="image_1627656736224.png"><img src="image_1627656736224.png" width="250" alt="label"/></a></p>
+<h1>Get the measurments</h1>
+<pre><code class="language-java">run(&quot;Set Measurements...&quot;, &quot;area mean integrated display redirect=label decimal=9&quot;);
+selectWindow(&quot;Untitled&quot;);
+run(&quot;Analyze Particles...&quot;, &quot;  show=Nothing display clear summarize&quot;);
+
+
+</code></pre>
+<table>
+<tr><th>Label</th><th>Area</th><th>Mean</th><th>IntDen</th><th>RawIntDen</th></tr>
+<tr><td>label</td><td>5000</td><td>1</td><td>5000</td><td>5000</td></tr>
+<tr><td>label</td><td>2500</td><td>2</td><td>5000</td><td>5000</td></tr>
+</table>
+<table>
+<tr><th>Slice</th><th>Count</th><th>Total Area</th><th>Average Size</th><th>%Area</th><th>Mean</th><th>IntDen</th></tr>
+<tr><td>Untitled</td><td>2</td><td>7500</td><td>3750</td><td>8.333333333</td><td>1.500000000</td><td>5000</td></tr>
+</table>
+<h1>Get final measurements</h1>
+<ul>
+<li>create a selection based on the mask and redirect that selection to the main image (the one called &quot;label&quot;)</li>
+<li>measure there</li>
+</ul>
+<pre><code class="language-java">selectWindow(&quot;Untitled&quot;);
+run(&quot;Create Selection&quot;);
+selectWindow(&quot;label&quot;);
+run(&quot;Restore Selection&quot;);
+run(&quot;Measure&quot;);
+</code></pre>
+<p><a href="image_1627656737734.png"><img src="image_1627656737734.png" width="250" alt="Untitled"/></a></p>
+<table>
+<tr><th>Label</th><th>Area</th><th>Mean</th><th>IntDen</th><th>RawIntDen</th></tr>
+<tr><td>label</td><td>5000</td><td>1.000000000</td><td>5000</td><td>5000</td></tr>
+<tr><td>label</td><td>2500</td><td>2.000000000</td><td>5000</td><td>5000</td></tr>
+<tr><td>label</td><td>7500</td><td>1.333333333</td><td>10000</td><td>10000</td></tr>
+</table>
+
+
+
+</body></html>
