@@ -115,10 +115,12 @@ run("Restore Selection");
 run("Measure");
 ```
 
+
+<a href="image_1627656737734.png"><img src="image_1627656737734.png" width="250" alt="Untitled"/></a>
+
 * Results table (with one new line resulting from the `run("Measure");` command):
 
 
-<a href="image_1627656737734.png"><img src="image_1627656737734.png" width="250" alt="Untitled"/></a>
 <table>
 <tr><th>Label</th><th>Area</th><th>Mean</th><th>IntDen</th><th>RawIntDen</th></tr>
 <tr><td>label</td><td>5000</td><td>1.000000000</td><td>5000</td><td>5000</td></tr>
@@ -127,6 +129,11 @@ run("Measure");
 </table>
 
 
+# Final remarks
+
+* the summary table export as `Mean` the value (1+2)/2 = 1.5. That is, we have one blob with gray values =1 and one blob with gray values = 2 and we get the average
+* when we ask for the `Mean` with the command `run("Measure");` it recognizes that 2500 px have intensity 2 and 5000 have intensity 1 som the actual mean is
+* (2500 * 2 + 5000 * 1) / 7500 = 10000/7500 = 1.333
 
 
 ```
