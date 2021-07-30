@@ -21,6 +21,8 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
+# Setup
+
 ```java
 
 
@@ -82,11 +84,17 @@ run("Analyze Particles...", "  show=Nothing display clear summarize");
 
 
 ```
+* Results table:
+
+
 <table>
 <tr><th>Label</th><th>Area</th><th>Mean</th><th>IntDen</th><th>RawIntDen</th></tr>
 <tr><td>label</td><td>5000</td><td>1</td><td>5000</td><td>5000</td></tr>
 <tr><td>label</td><td>2500</td><td>2</td><td>5000</td><td>5000</td></tr>
 </table>
+
+* Summary table:
+
 
 <table>
 <tr><th>Slice</th><th>Count</th><th>Total Area</th><th>Average Size</th><th>%Area</th><th>Mean</th><th>IntDen</th></tr>
@@ -106,6 +114,10 @@ selectWindow("label");
 run("Restore Selection");
 run("Measure");
 ```
+
+* Results table (with one new line resulting from the `run("Measure");` command):
+
+
 <a href="image_1627656737734.png"><img src="image_1627656737734.png" width="250" alt="Untitled"/></a>
 <table>
 <tr><th>Label</th><th>Area</th><th>Mean</th><th>IntDen</th><th>RawIntDen</th></tr>
