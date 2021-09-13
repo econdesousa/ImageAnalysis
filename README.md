@@ -1,8 +1,7 @@
 # ImageAnalysis
 
-Here I leave some scripts related to BioImage Analysis.
+Here I leave some scripts and other materials related to BioImage Analysis.<sup>[1](#myfootnote1)</sup>
 
-Some may be copied to independent repositories and archived.
 
 ## Attribution
 
@@ -16,3 +15,6 @@ The authors acknowledge the support of the i3S Scientific Platform
 Bioimaging, member of the national infrastructure 
 PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
+
+
+<a name="myfootnote1">1</a>: Some may be copied to independent repositories and archived.
