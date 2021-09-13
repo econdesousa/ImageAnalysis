@@ -1,6 +1,6 @@
 # ImageAnalysis
 
-Here I leave some scripts and other materials related to BioImage Analysis.<sup>[1](#myfootnote1)</sup> <sup id="a1">[1](#f1)</sup>
+Here I leave some scripts and other materials related to BioImage Analysis<sup id="a1">[(1)](#f1)</sup>.
 
 
 ## Attribution
@@ -16,6 +16,5 @@ Bioimaging, member of the national infrastructure
 PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
-
-<a name="myfootnote1">1</a>: Some may be copied to independent repositories and archived.
-<b id="f1">1</b> Some may be copied to independent repositories and archived. [↩](#a1)
+-----------------
+<sup><b id="f1">(1)</b></sup> Some may be copied to independent repositories and archived. [↩](#a1)
