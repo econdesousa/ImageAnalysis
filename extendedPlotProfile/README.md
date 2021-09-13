@@ -26,12 +26,16 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 If you use this macro please add in the acknowledgements of your papers and/or thesis (MSc and PhD) the reference to Bioimaging and the project PPBI-POCI-01-0145-FEDER-022122.
 As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
+ 
+
+please cite:
+* this macro
+* SNT: https://www.nature.com/articles/s41592-021-01105-7
+* 3D ImageJ Suite: https://academic.oup.com/bioinformatics/article/29/14/1840/231770
+
 
 
 ```java
-
-
-
 print("\\Clear");
 print("neurite radius (in microns)", nRadius);
 print("Quantif channel:",quantifChannel);
