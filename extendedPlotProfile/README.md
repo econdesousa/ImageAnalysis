@@ -1,4 +1,5 @@
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5544022.svg)](https://doi.org/10.5281/zenodo.5544022)
 
 
 #  BIOIMAGING - INEB/i3S
@@ -31,7 +32,7 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 please cite:
-* this macro
+* this macro: https://doi.org/10.5281/zenodo.5544022
 * SNT: https://www.nature.com/articles/s41592-021-01105-7
 * CLIJ https://www.nature.com/articles/s41592-019-0650-1
 
@@ -693,5 +694,4 @@ print("DONE!");
 
 
 
-```
-```
+
