@@ -1,6 +1,6 @@
 # ImageAnalysis
 
-Here I leave some scripts and other materials related to BioImage Analysis<sup id="a1">[(1)](#f1)</sup>.
+Here I leave some scripts and other materials related to BioImage Analysis<sup id="a1">(1)(#f1)</sup>.
 
 
 ## Attribution
