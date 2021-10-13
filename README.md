@@ -1,6 +1,6 @@
 # ImageAnalysis
 
-Here I leave some scripts and other materials related to BioImage Analysis<sup id="a1">(1)(#f1)</sup>.
+Here I leave some scripts and other materials related to BioImage Analysis<sup id="a1">[1](#f1)</sup>.
 
 
 ## Attribution
@@ -17,4 +17,4 @@ PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 
 -----------------
-<sup><b id="f1">(1)</b></sup> Some may be copied to independent repositories and archived. [↩](#a1)
+<sup><b id="f1">[1]</b></sup> Some may be copied to independent repositories and archived. [↩](#a1)
