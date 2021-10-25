@@ -51,6 +51,7 @@ eval("script", "IJ.getInstance().setAlwaysOnTop(true)");
 /*
 # load data and setup
 */
+
 setBatchMode(true);
 run("Bio-Formats Importer", "open=["+inputFile+"] autoscale color_mode=Default rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 mainName = File.nameWithoutExtension();
@@ -67,7 +68,6 @@ run("Tile");
 selectWindow("DAPI");
 getVoxelSize(width, height, depth, unit);
 
-
 /* 
 # StarDist to segment DAPI
 	
@@ -75,6 +75,7 @@ Stardist only works in 2D so image is converted from 3D to 2D+t
 
 The output is and virtual stack. It is duplicated to allow further processing
 */
+
 run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
 run("Command From Macro", "command=[de.csbdresden.stardist.StarDist2D], args=['input':'DAPI', 'modelChoice':'Versatile (fluorescent nuclei)', 'normalizeInput':'true', 'percentileBottom':'1.0', 'percentileTop':'99.8', 'probThresh':'0.5', 'nmsThresh':'0.4', 'outputType':'Label Image', 'nTiles':'1', 'excludeBoundary':'2', 'roiPosition':'Automatic', 'verbose':'false', 'showCsbdeepProgress':'false', 'showProbAndDist':'false'], process=[false]");
 selectWindow("Label Image");
@@ -88,6 +89,7 @@ rename("Label Image");
 
 object separation is not important here so we convert labels to mask
 */ 
+
 run("16-bit");
 setThreshold(1, 65535);
 setOption("BlackBackground", true);
@@ -95,7 +97,9 @@ run("Convert to Mask", "method=Default background=Dark black");
 
 /*
 # reset frames and slices back again
-*/ run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
+*/ 
+
+run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
 
 
 
@@ -110,6 +114,8 @@ run("Convert to Mask", "method=Default background=Dark black");
 	4. outerRing (label 4)
 2. and add them into a single labeled image
 */
+
+
 inputImage = getTitle();
 Ext.CLIJ2_push(inputImage);
 
@@ -177,6 +183,7 @@ eval("script", "IJ.getInstance().setAlwaysOnTop(false)");
 /*
 # Get stats
 */
+
 run("Intensity Measurements 2D/3D", "input=Signal labels=label_0_1_2_3_4 mean stddev max min median mode volume");
 Table.rename("Signal-intensity-measurements", "Results");
 vec=newArray(4);

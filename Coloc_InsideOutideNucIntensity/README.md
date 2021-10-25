@@ -8,10 +8,10 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 
 * 3D nuclei segmentation (Stardist)
 * Split image into 4 labels 	
-	*	nucSmall (eroded (3pix) nuc)
-	*	nucInsideBorder (3pixels long nuc ring)
-	*	border (3px outisde nuc)
-	*	outerRing (ring 3pixels outside border )
+*	nucSmall (eroded (3pix) nuc)
+*	nucInsideBorder (3pixels long nuc ring)
+*	border (3px outisde nuc)
+*	outerRing (ring 3pixels outside border )
 * Measure intensity in channel 4 at each of the four regions
  
  
@@ -55,6 +55,7 @@ eval("script", "IJ.getInstance().setAlwaysOnTop(true)");
 # load data and setup
 
 ```java
+
 setBatchMode(true);
 run("Bio-Formats Importer", "open=["+inputFile+"] autoscale color_mode=Default rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT");
 mainName = File.nameWithoutExtension();
@@ -71,10 +72,9 @@ run("Tile");
 selectWindow("DAPI");
 getVoxelSize(width, height, depth, unit);
 
-
 ```
-<a href="image_1635158151755.png"><img src="image_1635158151755.png" width="250" alt="DAPI"/></a>
-<a href="image_1635158153984.png"><img src="image_1635158153984.png" width="250" alt="Signal"/></a>
+<a href="image_1635158659766.png"><img src="image_1635158659766.png" width="250" alt="DAPI"/></a>
+<a href="image_1635158661915.png"><img src="image_1635158661915.png" width="250" alt="Signal"/></a>
 
 # StarDist to segment DAPI
 	
@@ -83,6 +83,7 @@ Stardist only works in 2D so image is converted from 3D to 2D+t
 The output is and virtual stack. It is duplicated to allow further processing
 
 ```java
+
 run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
 run("Command From Macro", "command=[de.csbdresden.stardist.StarDist2D], args=['input':'DAPI', 'modelChoice':'Versatile (fluorescent nuclei)', 'normalizeInput':'true', 'percentileBottom':'1.0', 'percentileTop':'99.8', 'probThresh':'0.5', 'nmsThresh':'0.4', 'outputType':'Label Image', 'nTiles':'1', 'excludeBoundary':'2', 'roiPosition':'Automatic', 'verbose':'false', 'showCsbdeepProgress':'false', 'showProbAndDist':'false'], process=[false]");
 selectWindow("Label Image");
@@ -92,30 +93,34 @@ rename("Label Image");
 
 
 ```
-<a href="image_1635158196637.png"><img src="image_1635158196637.png" width="250" alt="DAPI"/></a>
-<a href="image_1635158198756.png"><img src="image_1635158198756.png" width="250" alt="Label Image"/></a>
+<a href="image_1635158709870.png"><img src="image_1635158709870.png" width="250" alt="DAPI"/></a>
+<a href="image_1635158712012.png"><img src="image_1635158712012.png" width="250" alt="Label Image"/></a>
 
 # Threshold 
 
 object separation is not important here so we convert labels to mask
 
 ```java
+
 run("16-bit");
 setThreshold(1, 65535);
 setOption("BlackBackground", true);
 run("Convert to Mask", "method=Default background=Dark black");
 
 ```
-<a href="image_1635158198968.png"><img src="image_1635158198968.png" width="250" alt="Label Image"/></a>
+<a href="image_1635158712234.png"><img src="image_1635158712234.png" width="250" alt="Label Image"/></a>
 
 # reset frames and slices back again
-*/ run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
+
+```java
+
+run("Re-order Hyperstack ...", "channels=[Channels (c)] slices=[Frames (t)] frames=[Slices (z)]");
 
 
 
 
 ```
-<a href="image_1635158199219.png"><img src="image_1635158199219.png" width="250" alt="Label Image"/></a>
+<a href="image_1635158712535.png"><img src="image_1635158712535.png" width="250" alt="Label Image"/></a>
 
 # Get ROIs
 
@@ -127,6 +132,8 @@ run("Convert to Mask", "method=Default background=Dark black");
 2. and add them into a single labeled image
 
 ```java
+
+
 inputImage = getTitle();
 Ext.CLIJ2_push(inputImage);
 
@@ -192,12 +199,13 @@ setVoxelSize(width, height, depth, unit);
 eval("script", "IJ.getInstance().setAlwaysOnTop(false)");
 
 ```
-<a href="image_1635158199917.png"><img src="image_1635158199917.png" width="250" alt="Label Image"/></a>
-<a href="image_1635158200170.png"><img src="image_1635158200170.png" width="250" alt="label_0_1_2_3_4"/></a>
+<a href="image_1635158713210.png"><img src="image_1635158713210.png" width="250" alt="Label Image"/></a>
+<a href="image_1635158713502.png"><img src="image_1635158713502.png" width="250" alt="label_0_1_2_3_4"/></a>
 
 # Get stats
 
 ```java
+
 run("Intensity Measurements 2D/3D", "input=Signal labels=label_0_1_2_3_4 mean stddev max min median mode volume");
 Table.rename("Signal-intensity-measurements", "Results");
 vec=newArray(4);
