@@ -8,10 +8,10 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
 
 * 3D nuclei segmentation (Stardist)
 * Split image into 4 labels 	
-*	nucSmall (eroded (3pix) nuc)
-*	nucInsideBorder (3pixels long nuc ring)
-*	border (3px outisde nuc)
-*	outerRing (ring 3pixels outside border )
+	*	nucSmall (eroded (3pix) nuc)
+	*	nucInsideBorder (3pixels long nuc ring)
+	*	border (3px outisde nuc)
+	*	outerRing (ring 3pixels outside border )
 * Measure intensity in channel 4 at each of the four regions
  
  
@@ -37,7 +37,7 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 please cite:
-* this macro: 
+* this macro: https://github.com/econdesousa/ImageAnalysis/tree/master/Coloc_InsideOutideNucIntensity
 * CLIJ https://www.nature.com/articles/s41592-019-0650-1
 * Stardist: https://imagej.net/plugins/stardist#references
 *
