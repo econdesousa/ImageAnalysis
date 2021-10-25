@@ -36,7 +36,7 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 please cite:
-* this macro: 
+* this macro: https://github.com/econdesousa/ImageAnalysis/tree/master/Coloc_InsideOutideNucIntensity
 * CLIJ https://www.nature.com/articles/s41592-019-0650-1
 * Stardist: https://imagej.net/plugins/stardist#references
 *
