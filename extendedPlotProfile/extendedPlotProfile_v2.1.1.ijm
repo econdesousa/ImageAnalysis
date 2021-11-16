@@ -11,16 +11,16 @@ Eduardo Conde-Sousa (econdesousa@gmail.com)
  
  
 ### code version
-2.1
+2.1.1
 
 	
 ### last modification
-01/10/2021
+16/11/2021
 
 ### Requirements
 * update sites (see https://imagej.net/plugins/morpholibj#installation):
 	* IJPB-plugins
-	* CLIJ2
+	* CLIJ2 (see also requirements for CLIJ)
 	
 
 
@@ -30,7 +30,7 @@ As a suggestion you may use the following sentence:
  * The authors acknowledge the support of the i3S Scientific Platform Bioimaging, member of the national infrastructure PPBI - Portuguese Platform of Bioimaging (PPBI-POCI-01-0145-FEDER-022122).
 
 please cite:
-* this macro
+* this macro: https://doi.org/10.5281/zenodo.5706212
 * SNT: https://www.nature.com/articles/s41592-021-01105-7
 * CLIJ https://www.nature.com/articles/s41592-019-0650-1
 
@@ -38,7 +38,7 @@ please cite:
 
 #@ Integer (label="Quantif channel:",value=1) quantifChannel
 #@ float (value=5.0 , style="scroll bar", min=0, max=5, stepSize=0.1, label="neurite radius (in microns)", persist=true) nRadius
-#@ boolean (label="downsample ROIs") minDistFlag
+#@ boolean (label="downsample ROIs (NOT RECOMMENDED)") minDistFlag
 #@ boolean (label="batchMode") batchModeFlag
 
 
@@ -201,7 +201,7 @@ function resliceImage(label,mainName){
 		close();	
 		selectImage(labelID);
 		for (iter = 0; iter < lengthOf(zvec); iter++) {
-			zvec[iter] = round(zvec[iter] * depth / width ); // rescale zvec to the new image size
+			zvec[iter] = round(zvec[iter] * depth / width -2 ); // rescale zvec to the new image size
 		}
 		selectWindow(mainName);rename(mainName+"_originalSize");
 		id2close=getImageID();
@@ -228,7 +228,7 @@ function scaleVecsImageUnits(xvec,yvec,zvec){
 	for (i = 0; i < lengthOf(xvecUnits); i++) {
 		xvecUnits[i] = xvecUnits[i] * width;
 		yvecUnits[i] = yvecUnits[i] * height;
-		zvecUnits[i] = zvecUnits[i] * newDepth;
+		zvecUnits[i] = (zvecUnits[i]-1) * newDepth;
 	}
 }
 
@@ -282,6 +282,15 @@ function fillLabels(label,xvec,yvec,zvec,vec) {
 	run("glasbey_on_dark");
 }
 
+// Get centroids and distance between centrois
+run("Analyze Regions 3D", "centroid surface_area_method=[Crofton (13 dirs.)] euler_connectivity=26");
+X=Table.getColumn("Centroid.X");
+Y=Table.getColumn("Centroid.Y");
+Z=Table.getColumn("Centroid.Z");
+Table.rename("CENTROIDS");
+selectWindow("CENTROIDS");run("Close");
+
+
 /*
 # Dilate Labels
 */
@@ -314,12 +323,6 @@ function dilateLabelsCLIJ(label, dilationNumber) {
 # Quantifications
 */
 
-// Get centroids and distance between centrois
-run("Analyze Regions 3D", "centroid surface_area_method=[Crofton (13 dirs.)] euler_connectivity=26");
-X=Table.getColumn("Centroid.X");
-Y=Table.getColumn("Centroid.Y");
-Z=Table.getColumn("Centroid.Z");
-
 // measure 3D distance between consecutive points
 dist = getDistance(X,Y,Z);
 
@@ -335,24 +338,26 @@ function getDistance(xvec,yvec,zvec){
 	return vec;
 }
 
-Table.rename("CENTROIDS");
-selectWindow("CENTROIDS");run("Close");
-
 // Intensity Measurements
 run("Intensity Measurements 2D/3D", "input="+mainName+" labels="+label+"Dilated"+" mean stddev max min median mode skewness volume");
 Table.rename("Results");
 
+
 // Complete Results table with centrois & distance info
 selectWindow("Results");
+Table.setColumn("X", X);
+Table.setColumn("Y", Y);
+Table.setColumn("Z", Z);
 Table.setColumn("SpaceBetweenPoints", dist);
 cumdist=newArray(lengthOf(dist));
 for (i = 1; i < lengthOf(cumdist); i++) {
 	cumdist[i]=cumdist[i-1]+dist[i];
 }
 selectWindow("Results");
-Table.setColumn("Distance", cumdist);
+Table.setColumn("NeuriteLength", cumdist);
 selectWindow("Results");
 meanIntensity=Table.getColumn("Mean");
+
 
 /*
 # Create and save an extended plot profile
@@ -414,13 +419,15 @@ Plot.show();
 */
 
 // Save plot profile
-saveAs("PNG", outDir+"profileExtended_ch_"+quantifChannel+".png");
+saveAs("PNG", outDir+"profileExtended_ch"+quantifChannel+"_dist"+IJ.pad(mindistRadius, 2)+"_NeuriteRadius"+IJ.pad(nRadius, 2)+".png");
+
+
 
 
 
 // Save Results table
 selectWindow("Results");
-Table.save(outDir +"Results_ch_"+quantifChannel+".tsv");
+Table.save(outDir +"Results_ch"+quantifChannel+"_dist"+IJ.pad(mindistRadius, 2)+"_NeuriteRadius"+IJ.pad(nRadius, 2)+".tsv");
 Table.rename("Results");
 if (batchModeFlag) run("Close");
 
